@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:state_management_clean_arch/domain/entities/daily_task.dart';
 import 'package:state_management_clean_arch/domain/entities/todo.dart';
 import 'package:state_management_clean_arch/domain/repositories/todo_repository.dart';
 
@@ -8,28 +9,50 @@ class DataTodoRepository implements TodoRepository {
   DataTodoRepository._internal();
   factory DataTodoRepository() => _instance;
 
-  StreamController<List<Todo>> _streamController = StreamController.broadcast();
-  List<Todo> todos = [Todo('1', 'Study Math', 'now')];
+  StreamController<List<DailyTask>> _streamController =
+      StreamController.broadcast();
+
+  List<DailyTask> dailyTasks = [
+    DailyTask(
+      '1',
+      DateTime.now(),
+      [
+        Todo(
+            id: '1', text: '1', title: '1', durationHour: 1, durationMinute: 1),
+        Todo(
+            id: '2',
+            text: '312312',
+            title: '1231',
+            durationHour: 1123,
+            durationMinute: 121),
+      ],
+    ),
+    DailyTask(
+      '1',
+      DateTime.now(),
+      [
+        Todo(
+            id: '1', text: '1', title: '1', durationHour: 1, durationMinute: 1),
+        Todo(
+            id: '2',
+            text: '312312',
+            title: '1231',
+            durationHour: 1123,
+            durationMinute: 121),
+      ],
+    ),
+  ];
 
   @override
-  void addTodo(Todo todo) {
-    try {
-      todos.add(todo);
-      _streamController.add(todos);
-    } catch (e) {
-      print(e);
-    }
-  }
+  void addTodo(Todo todo) {}
 
   @override
-  Stream<List<Todo>> getTodos() {
-    try {
-      Future.delayed(Duration.zero).then(
-        (_) => _streamController.add(todos),
-      );
-      return _streamController.stream;
-    } catch (e) {
-      rethrow;
-    }
+  Stream<List<DailyTask>> getDailyTasks() {
+    Future.delayed(Duration.zero).then(
+      (_) => _streamController.add(
+        dailyTasks,
+      ),
+    );
+    return _streamController.stream;
   }
 }

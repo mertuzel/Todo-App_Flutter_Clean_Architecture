@@ -9,6 +9,8 @@ class AddTodoController extends Controller {
   AddTodoController(TodoRepository _todoRepository)
       : _presenter = AddTodoPresenter(_todoRepository);
 
+  int selectedIndex = 0;
+
   @override
   void initListeners() {
     _presenter.addtodoOnComplete = () {};
@@ -20,5 +22,10 @@ class AddTodoController extends Controller {
 
   void addTodo(Todo todo) {
     _presenter.addTodo(todo);
+  }
+
+  void onTapHandler(int index) {
+    selectedIndex = index;
+    refreshUI();
   }
 }

@@ -1,42 +1,42 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:state_management_clean_arch/domain/entities/todo.dart';
+import 'package:state_management_clean_arch/domain/entities/daily_task.dart';
 import 'package:state_management_clean_arch/domain/repositories/todo_repository.dart';
-import 'package:state_management_clean_arch/domain/usecases/get_todos.dart';
+import 'package:state_management_clean_arch/domain/usecases/get_daily_tasks.dart';
 
 class TodosPresenter extends Presenter {
-  late Function getTodosOnNext;
-  late Function getTodosOnError;
+  late Function getDailyTasksOnNext;
+  late Function getDailyTasksOnError;
 
-  final GetTodos _getTodos;
+  final GetDailytasks _getDailytasks;
 
   TodosPresenter(TodoRepository _todoRepository)
-      : _getTodos = GetTodos(_todoRepository);
+      : _getDailytasks = GetDailytasks(_todoRepository);
 
-  void getTodos() {
-    _getTodos.execute(_GetTodosObserver(this));
+  void getDailyTasks() {
+    _getDailytasks.execute(_GetDailyTasksObserver(this));
   }
 
   @override
   void dispose() {
-    _getTodos.dispose();
+    _getDailytasks.dispose();
   }
 }
 
-class _GetTodosObserver extends Observer<List<Todo>> {
+class _GetDailyTasksObserver extends Observer<List<DailyTask>> {
   final TodosPresenter _presenter;
 
-  _GetTodosObserver(this._presenter);
+  _GetDailyTasksObserver(this._presenter);
 
   @override
   void onComplete() {}
 
   @override
   void onError(error) {
-    _presenter.getTodosOnError(error);
+    _presenter.getDailyTasksOnError(error);
   }
 
   @override
-  void onNext(List<Todo>? response) {
-    _presenter.getTodosOnNext(response);
+  void onNext(List<DailyTask>? dailyTasks) {
+    _presenter.getDailyTasksOnNext(dailyTasks);
   }
 }

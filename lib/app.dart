@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:state_management_clean_arch/app/pages/home/home_view.dart';
+import 'package:state_management_clean_arch/app/pages/todos/todos_view.dart';
 
 class App extends StatelessWidget {
   @override
@@ -10,7 +10,7 @@ class App extends StatelessWidget {
     ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeView(),
+      home: TodosView(),
     );
   }
 }

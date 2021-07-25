@@ -1,10 +1,18 @@
 class Todo {
   final String id;
+  final String title;
   final String text;
-  final String date;
+  final int durationHour;
+  final int durationMinute;
 
-  Todo(this.id, this.text, this.date);
+  Todo({
+    required this.id,
+    required this.title,
+    required this.text,
+    required this.durationHour,
+    required this.durationMinute,
+  });
 
   @override
-  String toString() => '$id,$text,$date';
+  String toString() => '$id,$text';
 }
