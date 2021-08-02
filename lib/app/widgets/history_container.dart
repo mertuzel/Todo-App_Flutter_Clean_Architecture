@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:state_management_clean_arch/app/constants.dart';
+import 'package:state_management_clean_arch/data/utils/date.dart';
 
 class HistoryContainer extends StatelessWidget {
-  final String date;
-  final String day;
+  final DateTime date;
   final bool isPressed;
 
   const HistoryContainer({
     required this.date,
-    required this.day,
     this.isPressed = false,
   });
   @override
@@ -25,7 +24,9 @@ class HistoryContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            date,
+            date.day.toString() +
+                ' ' +
+                DateUtil.getMonthOFGivenDateTime(date).substring(0, 3),
             style: TextStyle(
               color: isPressed ? MainColors.kCream : MainColors.kBlack,
               fontWeight: FontWeight.w600,
@@ -33,7 +34,7 @@ class HistoryContainer extends StatelessWidget {
             ),
           ),
           Text(
-            day,
+            DateUtil.getDayOfGivenDateTime(date).substring(0, 3),
             style: TextStyle(
               color: isPressed ? MainColors.kCream : MainColors.kBlack,
               fontWeight: FontWeight.w500,

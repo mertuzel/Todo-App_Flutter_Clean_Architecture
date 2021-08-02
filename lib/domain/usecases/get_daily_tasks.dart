@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:state_management_clean_arch/domain/entities/daily_task.dart';
-import 'package:state_management_clean_arch/domain/repositories/todo_repository.dart';
+import 'package:state_management_clean_arch/domain/repositories/daily_task_repository.dart';
 
 class GetDailytasks extends UseCase<List<DailyTask>, void> {
-  final TodoRepository _todoRepository;
+  final DailyTaskRepository _todoRepository;
 
   GetDailytasks(this._todoRepository);
   final StreamController<List<DailyTask>> _controller =

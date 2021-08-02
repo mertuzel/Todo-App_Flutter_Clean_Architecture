@@ -1,19 +1,20 @@
 import 'dart:async';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:state_management_clean_arch/domain/entities/todo.dart';
-import 'package:state_management_clean_arch/domain/repositories/todo_repository.dart';
+import 'package:state_management_clean_arch/domain/repositories/daily_task_repository.dart';
 
-class AddTodo extends UseCase<void, AddTodoParams> {
-  final TodoRepository _todoRepository;
+class AddTodoToDailyTask extends UseCase<void, AddTodoToDailyTaskParams> {
+  final DailyTaskRepository _todoRepository;
 
-  AddTodo(this._todoRepository);
+  AddTodoToDailyTask(this._todoRepository);
 
   @override
-  Future<Stream<void>> buildUseCaseStream(AddTodoParams? params) async {
+  Future<Stream<void>> buildUseCaseStream(
+      AddTodoToDailyTaskParams? params) async {
     StreamController<void> controller = StreamController();
 
     try {
-      _todoRepository.addTodo(params!.todo);
+      _todoRepository.addTodoToDailyTask(params!.todo);
       logger.finest('AddTodoUseCase successful.');
       controller.close();
     } catch (error, st) {
@@ -24,8 +25,8 @@ class AddTodo extends UseCase<void, AddTodoParams> {
   }
 }
 
-class AddTodoParams {
+class AddTodoToDailyTaskParams {
   final Todo todo;
 
-  AddTodoParams(this.todo);
+  AddTodoToDailyTaskParams(this.todo);
 }

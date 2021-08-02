@@ -7,3 +7,28 @@ class MainColors {
   static const kGrey = Color(0xFFC4C4C4);
   static const kLightGrey = Color(0xFFF2F2F2);
 }
+
+List<String> daysOfWeek = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+];
+
+List<String> monthsOfYear = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];

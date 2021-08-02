@@ -2,15 +2,15 @@ class Todo {
   final String id;
   final String title;
   final String text;
-  final int durationHour;
-  final int durationMinute;
+  final DateTime startingTime;
+  final DateTime endingTime;
 
   Todo({
     required this.id,
     required this.title,
     required this.text,
-    required this.durationHour,
-    required this.durationMinute,
+    required this.startingTime,
+    required this.endingTime,
   });
 
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:state_management_clean_arch/domain/entities/daily_task.dart';
-import 'package:state_management_clean_arch/domain/repositories/todo_repository.dart';
+import 'package:state_management_clean_arch/domain/repositories/daily_task_repository.dart';
 import 'package:state_management_clean_arch/domain/usecases/get_daily_tasks.dart';
 
 class TodosPresenter extends Presenter {
@@ -9,7 +9,7 @@ class TodosPresenter extends Presenter {
 
   final GetDailytasks _getDailytasks;
 
-  TodosPresenter(TodoRepository _todoRepository)
+  TodosPresenter(DailyTaskRepository _todoRepository)
       : _getDailytasks = GetDailytasks(_todoRepository);
 
   void getDailyTasks() {

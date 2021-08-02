@@ -1,19 +1,19 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:state_management_clean_arch/domain/entities/todo.dart';
-import 'package:state_management_clean_arch/domain/repositories/todo_repository.dart';
-import 'package:state_management_clean_arch/domain/usecases/add_todo.dart';
+import 'package:state_management_clean_arch/domain/repositories/daily_task_repository.dart';
+import 'package:state_management_clean_arch/domain/usecases/add_todo_to_daily_task.dart';
 
 class AddTodoPresenter extends Presenter {
   late Function addtodoOnComplete;
   late Function addtodoOnError;
 
-  final AddTodo _addTodo;
+  final AddTodoToDailyTask _addTodo;
 
-  AddTodoPresenter(TodoRepository _todoRepository)
-      : _addTodo = AddTodo(_todoRepository);
+  AddTodoPresenter(DailyTaskRepository _todoRepository)
+      : _addTodo = AddTodoToDailyTask(_todoRepository);
 
   void addTodo(Todo todo) {
-    _addTodo.execute(_AddTodoObserver(this), AddTodoParams(todo));
+    _addTodo.execute(_AddTodoObserver(this), AddTodoToDailyTaskParams(todo));
   }
 
   @override

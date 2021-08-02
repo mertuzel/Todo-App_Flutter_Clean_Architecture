@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:state_management_clean_arch/app/constants.dart';
-import 'package:state_management_clean_arch/app/pages/todos/todos_controller.dart';
+import 'package:state_management_clean_arch/app/pages/daily_tasks/daily_tasks_controller.dart';
 import 'package:state_management_clean_arch/app/widgets/history_container.dart';
 import 'package:state_management_clean_arch/app/widgets/todo_container.dart';
-import 'package:state_management_clean_arch/data/repositories/data_todo_repository.dart';
+import 'package:state_management_clean_arch/data/repositories/data_daily_task_repository.dart';
+import 'package:state_management_clean_arch/data/utils/date.dart';
+import 'package:state_management_clean_arch/domain/entities/daily_task.dart';
+import 'package:state_management_clean_arch/domain/entities/todo.dart';
 
 class TodosView extends View {
   @override
   State<StatefulWidget> createState() => _TodosViewState(
         TodosController(
-          DataTodoRepository(),
+          DataDailyTaskRepository(),
         ),
       );
 }
@@ -43,14 +46,31 @@ class _TodosViewState extends ViewState<TodosView, TodosController> {
                           size: 25,
                           color: Colors.transparent,
                         ),
-                        Text(
-                          '5 May',
-                          style: TextStyle(
-                            color: MainColors.kCream,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        ControlledWidgetBuilder<TodosController>(
+                            builder: (context, controller) {
+                          return Text(
+                            controller.dailyTasks.isNotEmpty
+                                ? controller.dailyTasks[controller.currentIndex]
+                                        .date.day
+                                        .toString() +
+                                    ' ' +
+                                    DateUtil.getMonthOFGivenDateTime(
+                                      controller
+                                          .dailyTasks[controller.currentIndex]
+                                          .date,
+                                    )
+                                : DateTime.now().day.toString() +
+                                    ' ' +
+                                    DateUtil.getMonthOFGivenDateTime(
+                                      DateTime.now(),
+                                    ),
+                            style: TextStyle(
+                              color: MainColors.kCream,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        }),
                         Icon(
                           Icons.history,
                           size: 25,
@@ -75,14 +95,25 @@ class _TodosViewState extends ViewState<TodosView, TodosController> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Text(
-                                '8 tasks',
-                                style: TextStyle(
-                                  color: MainColors.kCream,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                              ControlledWidgetBuilder<TodosController>(
+                                  builder: (context, controller) {
+                                return Text(
+                                  controller.dailyTasks.isNotEmpty
+                                      ? (controller
+                                              .dailyTasks[
+                                                  controller.currentIndex]
+                                              .todos
+                                              .length
+                                              .toString() +
+                                          ' tasks')
+                                      : '0 task',
+                                  style: TextStyle(
+                                    color: MainColors.kCream,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                );
+                              }),
                             ],
                           ),
                           ControlledWidgetBuilder<TodosController>(
@@ -136,9 +167,13 @@ class _TodosViewState extends ViewState<TodosView, TodosController> {
               child: ControlledWidgetBuilder<TodosController>(
                   builder: (context, controller) {
                 return PageView(
+                  onPageChanged: (int page) {
+                    controller.currentIndex = page;
+                    controller.refreshScreen();
+                  },
                   children: [
                     for (int i = 0; i < controller.dailyTasks.length; i++)
-                      _singlePage(size),
+                      _singlePage(size, controller.dailyTasks[i].todos),
                   ],
                 );
               }),
@@ -149,7 +184,7 @@ class _TodosViewState extends ViewState<TodosView, TodosController> {
     );
   }
 
-  SingleChildScrollView _singlePage(Size size) {
+  Widget _singlePage(Size size, List<Todo> todos) {
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(left: 20, right: 20),
@@ -162,8 +197,7 @@ class _TodosViewState extends ViewState<TodosView, TodosController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 HistoryContainer(
-                  date: '5 May',
-                  day: 'Mon',
+                  date: todos.first.startingTime,
                   isPressed: true,
                 ),
                 Container(
@@ -203,47 +237,15 @@ class _TodosViewState extends ViewState<TodosView, TodosController> {
                 )
               ],
             ),
-            SizedBox(
-              height: 30,
-            ),
-            TodoContainer(
-              duration: '1 hour',
-              date: '123',
-              isCurrent: true,
-              size: size,
-              title: 'Buy a pack of coffee',
-            ),
-            TodoContainer(
-              duration: '30 mins',
-              date: '123',
-              isCurrent: false,
-              size: size,
-              title: 'Wash the dishes',
-            ),
-            TodoContainer(
-              duration: '30 mins',
-              date: '123',
-              isCurrent: false,
-              size: size,
-              title: 'Make a good omlette',
-            ),
-            TodoContainer(
-              duration: '30 mins',
-              date: '123',
-              isCurrent: false,
-              size: size,
-              title: 'Watch a good movie',
-            ),
-            TodoContainer(
-              duration: '30 mins',
-              date: '123',
-              isCurrent: false,
-              size: size,
-              title: 'Get some sleep',
-            ),
-            SizedBox(
-              height: 30,
-            ),
+            for (int i = 0; i < todos.length; i++)
+              TodoContainer(
+                isCurrent: false,
+                size: size,
+                title: todos[i].title,
+                date:
+                    '${todos[i].startingTime.hour.toString()}:${todos[i].startingTime.minute.toString()} - ${todos[i].endingTime.hour.toString()}:${todos[i].endingTime.minute.toString()}',
+                duration: '30 mins',
+              )
           ],
         ),
       ),
