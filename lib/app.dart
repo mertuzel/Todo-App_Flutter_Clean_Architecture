@@ -10,7 +10,7 @@ class App extends StatelessWidget {
     ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TodosView(),
+      home: DailyTasksView(),
     );
   }
 }

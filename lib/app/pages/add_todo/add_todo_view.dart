@@ -30,6 +30,9 @@ class _AddTodoViewState extends ViewState<AddTodoView, AddTodoController> {
         width: size.width,
         height: size.height,
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
           child: Container(
             margin: EdgeInsets.only(
               top: topPadding + 26,
@@ -76,7 +79,9 @@ class _AddTodoViewState extends ViewState<AddTodoView, AddTodoController> {
                 ControlledWidgetBuilder<AddTodoController>(
                   builder: (context, controller) {
                     return SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
+                      physics: BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [

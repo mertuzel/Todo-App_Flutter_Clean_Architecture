@@ -9,17 +9,18 @@ import 'package:state_management_clean_arch/data/utils/date.dart';
 import 'package:state_management_clean_arch/domain/entities/daily_task.dart';
 import 'package:state_management_clean_arch/domain/entities/todo.dart';
 
-class TodosView extends View {
+class DailyTasksView extends View {
   @override
-  State<StatefulWidget> createState() => _TodosViewState(
-        TodosController(
+  State<StatefulWidget> createState() => _DailyTasksViewState(
+        DailyTasksController(
           DataDailyTaskRepository(),
         ),
       );
 }
 
-class _TodosViewState extends ViewState<TodosView, TodosController> {
-  _TodosViewState(TodosController controller) : super(controller);
+class _DailyTasksViewState
+    extends ViewState<DailyTasksView, DailyTasksController> {
+  _DailyTasksViewState(DailyTasksController controller) : super(controller);
 
   Widget get view {
     final Size size = MediaQuery.of(context).size;
@@ -27,161 +28,167 @@ class _TodosViewState extends ViewState<TodosView, TodosController> {
     return Scaffold(
       backgroundColor: MainColors.kPrimary,
       key: globalKey,
-      body: ControlledWidgetBuilder<TodosController>(
-          builder: (context, controller) {
-        return controller.dailyTasks == null
-            ? Container(
-                color: Colors.white,
-                width: size.width,
-                height: size.height,
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: MainColors.kPrimary,
-                ),
-              )
-            : SafeArea(
-                child: Column(
-                  children: [
-                    Container(
-                      width: size.width,
-                      height: 150,
-                      color: MainColors.kPrimary,
-                      child: Container(
-                        padding: EdgeInsets.only(top: 26, left: 38, right: 22),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  Icons.history,
-                                  size: 25,
-                                  color: Colors.transparent,
-                                ),
-                                Text(
-                                  DateTime.now().day.toString() +
-                                      ' ' +
-                                      DateUtil.getMonthOFGivenDateTime(
-                                        DateTime.now(),
-                                      ),
-                                  style: TextStyle(
-                                    color: MainColors.kCream,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.history,
-                                  size: 25,
-                                  color: MainColors.kCream,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 22,
-                            ),
-                            Container(
-                              child: Row(
+      body: ControlledWidgetBuilder<DailyTasksController>(
+        builder: (context, controller) {
+          return controller.dailyTasks == null
+              ? Container(
+                  color: Colors.white,
+                  width: size.width,
+                  height: size.height,
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(
+                    color: MainColors.kPrimary,
+                  ),
+                )
+              : SafeArea(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: size.width,
+                        height: 150,
+                        color: MainColors.kPrimary,
+                        child: Container(
+                          padding:
+                              EdgeInsets.only(top: 26, left: 38, right: 22),
+                          child: Column(
+                            children: [
+                              Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        'Today',
-                                        style: TextStyle(
-                                          color: MainColors.kCream,
-                                          fontSize: 21,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        controller.dailyTasks!.isNotEmpty
-                                            ? (controller
-                                                    .dailyTasks![
-                                                        controller.currentIndex]
-                                                    .todos
-                                                    .length
-                                                    .toString() +
-                                                ' tasks')
-                                            : '0 task',
-                                        style: TextStyle(
-                                          color: MainColors.kCream,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
+                                  Icon(
+                                    Icons.history,
+                                    size: 25,
+                                    color: Colors.transparent,
                                   ),
-                                  Container(
-                                    height: 45,
-                                    width: 100,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        primary: MainColors.kCream,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                  Text(
+                                    DateTime.now().day.toString() +
+                                        ' ' +
+                                        DateUtil.getMonthOFGivenDateTime(
+                                          DateTime.now(),
                                         ),
-                                      ),
-                                      onPressed: () {
-                                        controller.navigateToAddTodoPage();
-                                      },
-                                      child: Text(
-                                        'Add new',
-                                        style: TextStyle(
-                                          color: MainColors.kPrimary,
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
+                                    style: TextStyle(
+                                      color: MainColors.kCream,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
                                     ),
+                                  ),
+                                  Icon(
+                                    Icons.history,
+                                    size: 25,
+                                    color: MainColors.kCream,
                                   ),
                                 ],
                               ),
-                            )
-                          ],
+                              SizedBox(
+                                height: 22,
+                              ),
+                              Container(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          'Today',
+                                          style: TextStyle(
+                                            color: MainColors.kCream,
+                                            fontSize: 21,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          controller.dailyTasks!.isNotEmpty
+                                              ? (controller
+                                                      .dailyTasks![controller
+                                                          .currentIndex]
+                                                      .todos
+                                                      .length
+                                                      .toString() +
+                                                  ' tasks')
+                                              : '0 task',
+                                          style: TextStyle(
+                                            color: MainColors.kCream,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      height: 45,
+                                      width: 100,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: MainColors.kCream,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          controller.navigateToAddTodoPage();
+                                        },
+                                        child: Text(
+                                          'Add new',
+                                          style: TextStyle(
+                                            color: MainColors.kPrimary,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.09),
-                                blurRadius: 4,
-                                offset: Offset(-2, -4))
-                          ]),
-                      height: size.height - 150 - topPadding,
-                      width: size.width,
-                      child: PageView(
-                        onPageChanged: (int page) {
-                          controller.currentIndex = page;
-                          controller.refreshScreen();
-                        },
-                        children: [
-                          for (int i = 0;
-                              i < controller.dailyTasks!.length;
-                              i++)
-                            _singlePage(size, controller.dailyTasks![i].todos,
-                                controller.dailyTasks![i]),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              );
-      }),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                              topRight: Radius.circular(40),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.09),
+                                  blurRadius: 4,
+                                  offset: Offset(-2, -4))
+                            ]),
+                        height: size.height - 150 - topPadding,
+                        width: size.width,
+                        child: PageView(
+                          onPageChanged: (int page) {
+                            controller.currentIndex = page;
+                            controller.refreshScreen();
+                          },
+                          children: [
+                            for (int i = 0;
+                                i < controller.dailyTasks!.length;
+                                i++)
+                              _singlePage(size, controller.dailyTasks![i].todos,
+                                  controller.dailyTasks![i]),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+        },
+      ),
     );
   }
 
   Widget _singlePage(Size size, List<Todo> todos, DailyTask dailyTask) {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
       child: Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         margin: EdgeInsets.only(top: 46),

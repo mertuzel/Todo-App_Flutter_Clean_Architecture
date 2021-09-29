@@ -6,10 +6,10 @@ import 'package:state_management_clean_arch/app/pages/daily_tasks/daily_tasks_pr
 import 'package:state_management_clean_arch/domain/entities/daily_task.dart';
 import 'package:state_management_clean_arch/domain/repositories/daily_task_repository.dart';
 
-class TodosController extends Controller {
-  final TodosPresenter _presenter;
-  TodosController(DailyTaskRepository _todoRepository)
-      : _presenter = TodosPresenter(_todoRepository);
+class DailyTasksController extends Controller {
+  final DailyTasksPresenter _presenter;
+  DailyTasksController(DailyTaskRepository _todoRepository)
+      : _presenter = DailyTasksPresenter(_todoRepository);
 
   List<DailyTask>? dailyTasks;
   bool isPressed = false;

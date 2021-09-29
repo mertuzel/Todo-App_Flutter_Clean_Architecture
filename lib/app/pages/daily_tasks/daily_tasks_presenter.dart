@@ -3,13 +3,13 @@ import 'package:state_management_clean_arch/domain/entities/daily_task.dart';
 import 'package:state_management_clean_arch/domain/repositories/daily_task_repository.dart';
 import 'package:state_management_clean_arch/domain/usecases/get_daily_tasks.dart';
 
-class TodosPresenter extends Presenter {
+class DailyTasksPresenter extends Presenter {
   late Function getDailyTasksOnNext;
   late Function getDailyTasksOnError;
 
   final GetDailytasks _getDailytasks;
 
-  TodosPresenter(DailyTaskRepository _todoRepository)
+  DailyTasksPresenter(DailyTaskRepository _todoRepository)
       : _getDailytasks = GetDailytasks(_todoRepository);
 
   void getDailyTasks() {
@@ -23,7 +23,7 @@ class TodosPresenter extends Presenter {
 }
 
 class _GetDailyTasksObserver extends Observer<List<DailyTask>> {
-  final TodosPresenter _presenter;
+  final DailyTasksPresenter _presenter;
 
   _GetDailyTasksObserver(this._presenter);
 
