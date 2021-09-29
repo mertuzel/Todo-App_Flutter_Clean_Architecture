@@ -11,7 +11,7 @@ class TodosController extends Controller {
   TodosController(DailyTaskRepository _todoRepository)
       : _presenter = TodosPresenter(_todoRepository);
 
-  List<DailyTask> dailyTasks = [];
+  List<DailyTask>? dailyTasks;
   bool isPressed = false;
   int currentIndex = 0;
 

@@ -12,10 +12,10 @@ class AddTodoController extends Controller {
       : _presenter = AddTodoPresenter(_todoRepository);
 
   String? title;
-  int? startingHour;
-  int? startingMinute;
-  int? endingHour;
-  int? endingMinute;
+  num? startingHour;
+  num? startingMinute;
+  num? endingHour;
+  num? endingMinute;
   String? text;
 
   List<DateTime> oneWeekDateTimes = DateUtil.next7Days;
@@ -24,6 +24,7 @@ class AddTodoController extends Controller {
   @override
   void initListeners() {
     _presenter.addtodoOnComplete = () {
+      FocusScope.of(getContext()).unfocus();
       Navigator.of(getContext()).pop();
     };
 
@@ -38,6 +39,14 @@ class AddTodoController extends Controller {
 
   void onTapHandler(int index) {
     selectedIndex = index;
+    startingHour = null;
+    startingMinute = null;
+    endingHour = null;
+    endingMinute = null;
+    refreshUI();
+  }
+
+  void refreshScreen() {
     refreshUI();
   }
 }
