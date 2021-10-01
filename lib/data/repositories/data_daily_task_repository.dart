@@ -30,21 +30,26 @@ class DataDailyTaskRepository implements DailyTaskRepository {
             .every((element) => element.date.day != todo.startingTime.day)) {
       final dailyTaskToAdd =
           DailyTask(DateTime.now().toString(), todo.startingTime, [todo]);
+
       _firestore.collection('dailyTasks').doc().set(dailyTaskToAdd.toJson());
+
       dailyTasks.add(dailyTaskToAdd);
     } else {
       DailyTask dailyTaskToAdd = dailyTasks
           .firstWhere((element) => element.date.day == todo.startingTime.day);
-      _firestore.collection('dailyTasks').doc(dailyTaskToAdd.id).update({
-        'todos': FieldValue.arrayUnion(
-          [todo.toJson()],
-        ),
-      });
+      _firestore.collection('dailyTasks').doc(dailyTaskToAdd.id).update(
+        {
+          'todos': FieldValue.arrayUnion(
+            [todo.toJson()],
+          ),
+        },
+      );
       dailyTaskToAdd.todos.add(todo);
     }
     dailyTasks.sort(
       (a, b) => a.date.day.compareTo(b.date.day),
     );
+
     _streamController.add(dailyTasks);
   }
 
@@ -62,6 +67,7 @@ class DataDailyTaskRepository implements DailyTaskRepository {
     docSnapshots.forEach((json) {
       dailyTasks.add(DailyTask.fromJson(json));
     });
+
     _streamController.add(dailyTasks);
     isDailyTasksFetched = true;
   }

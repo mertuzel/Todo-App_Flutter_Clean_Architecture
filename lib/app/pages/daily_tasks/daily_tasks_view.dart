@@ -40,7 +40,8 @@ class _DailyTasksViewState
                     color: MainColors.kPrimary,
                   ),
                 )
-              : SafeArea(
+              : Container(
+                  margin: EdgeInsets.only(top: topPadding),
                   child: Column(
                     children: [
                       Container(
@@ -184,7 +185,11 @@ class _DailyTasksViewState
     );
   }
 
-  Widget _singlePage(Size size, List<Todo> todos, DailyTask dailyTask) {
+  Widget _singlePage(
+    Size size,
+    List<Todo> todos,
+    DailyTask dailyTask,
+  ) {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(
         parent: AlwaysScrollableScrollPhysics(),
