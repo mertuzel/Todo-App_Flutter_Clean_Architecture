@@ -164,6 +164,9 @@ class _DailyTasksViewState
                         height: size.height - 150 - topPadding,
                         width: size.width,
                         child: PageView(
+                          physics: AlwaysScrollableScrollPhysics(
+                            parent: BouncingScrollPhysics(),
+                          ),
                           onPageChanged: (int page) {
                             controller.currentIndex = page;
                             controller.refreshScreen();

@@ -36,6 +36,6 @@ class DailyTask {
     final int hour = total ~/ 60;
     final int minutes = total % 60;
     if (minutes == 0) return '$hour hours';
-    return '$hour hours and $minutes minutes a day';
+    return '$hour hours and $minutes minutes in a day';
   }
 }
